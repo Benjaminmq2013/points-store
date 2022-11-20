@@ -38,9 +38,17 @@ const Container = styled("div")<{ selected?: boolean }>`
   .${(props) => props.className + "__tag"} {
     position: absolute;
     top: 5px;
-    left: 12px;
+    left: 5px;
     font-size: 13px;
-    color: #B2B2B2;
+    color: white;
+    height: 19px;
+    width: 76px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+
+    background-color: grey;
   }
   
   .${(props) => props.className + "__title"} {
@@ -87,9 +95,7 @@ const Container = styled("div")<{ selected?: boolean }>`
   }
   
   
-  .${(props) => props.className + "__symbol"} {
-    color: #28D63A;
-  }
+  
   
 
 `;
@@ -120,7 +126,6 @@ export interface params {
   iconSecondary?: string;
   tagSecondary?: string;
   iconTertiary?: string;
-  symbol?: string;
 
   style?: CSSProperties;
   className?: string;
@@ -164,10 +169,8 @@ const App = (params:params):JSX.Element => {
       </div>
 
 
-      <div className={ params.className + "__tag" }>
-        <span className={ params.className + "__symbol"}>{ params.symbol } </span>
-        <span className={ params.className + "__tag-name" } >{ params.tag }</span>
-         
+      <div className={ params.className + "__tag" }>        
+        { params.tag }         
       </div>
 
       { params.tagSecondary && <span className={ params.className + "__tagSecondary" }>
