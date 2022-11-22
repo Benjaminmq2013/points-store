@@ -113,8 +113,8 @@ const App = (params:params):JSX.Element => {
       <div className={ params.className + "__wrapper" }>
         <h3 className= {params.className + "__title"} >{ params.title }</h3>
 
-        {params.values.map(elem => (
-          <div className={ params.className + "__properties" } id={ "__properties" + elem.id } >
+        {params.values.map((elem, id) => (
+          <div className={ params.className + "__properties" } id={ "__properties" + elem.id } key={ id } >
             <h4 className={ params.className + "__key" }>{ elem.title }</h4>
             <span className= { params.className + "__value" }>{ elem.value }</span>
           </div>
@@ -125,8 +125,8 @@ const App = (params:params):JSX.Element => {
       </div>
 
       <section className={ params.className + "__footer"}>
-        {params.footerLinks.map(link => (
-          <a href="#" className={ params.className + "__footer_link"}>{ link }</a>
+        {params.footerLinks.map((link, id) => (
+          <a key={ id } href="#" className={ params.className + "__footer_link"}>{ link }</a>
         ))}
       </section>
     </Container>

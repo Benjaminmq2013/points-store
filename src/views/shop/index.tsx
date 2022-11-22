@@ -70,8 +70,12 @@ const Container = styled("div")`
     background-color: #ebcb00;
   }
 
-  #__properties1 span {
+ 
+  #__properties5 span {
     color: #369ce1;
+  }
+  #__properties9 span {
+    color: #d7bb00;
   }
 
   .shop-button {
@@ -147,11 +151,23 @@ const App = (params: params) => {
   ];
 
 
-  const summaryOptions:property[] = [
-    { title: "You selected:", value: "5000 coins - premium-pack", id: "1" },
-    { title: "Price:", value: "$ 135USD ", id: "2" },
+  const basicSelected:property[] = [
+    { title: "You selected:", value: "1000 coins - basic-pack", id: "1" },
+    { title: "Price:", value: "$ 30USD ", id: "2" },
     { title: "Quantity:", value: "1", id: "3" },
     { title: "Payment Method:", value: "Credit Card: 5552", id: "4" }
+  ]
+  const premiumSelected:property[] = [
+    { title: "You selected:", value: "5000 coins - premium-pack", id: "5" },
+    { title: "Price:", value: "$ 135USD ", id: "6" },
+    { title: "Quantity:", value: "1", id: "7" },
+    { title: "Payment Method:", value: "Credit Card: 5552", id: "8" }
+  ]
+  const goldSelected:property[] = [
+    { title: "You selected:", value: "7500 coins - gold-pack", id: "9" },
+    { title: "Price:", value: "$ 192USD ", id: "10" },
+    { title: "Quantity:", value: "1", id: "11" },
+    { title: "Payment Method:", value: "Credit Card: 5552", id: "12" }
   ]
 
   return (
@@ -162,27 +178,31 @@ const App = (params: params) => {
         visible={params.visible}
         onClose={params.handleClose}
         icon="assets/icons/coin.svg"
-        closeIcon="assets/icons/close.svg"        
+        closeIcon="assets/icons/close.svg"
       >
         <div className="shop__container">
           <h2 className="shop-title">Packs available</h2>
 
           <div className="pack__container">
-            {data.map((elem) => (
+            {data.map((elem, id) => (
               <Pack
                 {...elem}
                 name="selected"
                 icon="assets/icons/coin.svg"
                 iconSecondary="assets/icons/check.svg"
                 iconTertiary="assets/icons/offer.svg"
+                key={ id }
               />
             ))}
           </div>
-          
         </div>
 
-        <Summary title='Summary:' values={ summaryOptions } button={ <Button title='Chargue Now' className="shop-button" icon='assets/icons/cart.svg' />  } footerLinks={ links } />
-
+        <Summary
+          title="Summary:"
+          values={ selected === "basic" ? basicSelected : selected === "premium" ? premiumSelected : goldSelected  }
+          button={ <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" /> }
+          footerLinks={links}
+        />
       </Modal>
     </Container>
   );

@@ -1,12 +1,16 @@
 
 import styled from 'styled-components';
+
+
 import Header, { optionProps } from "../../components/header"
 import Button from "../../components/button"
 import Hero from "../../components/hero"
 import Card from '../../components/card';
 import History from "../history"
-import useHandleMenu from '../../hooks/useHandleMenu';
 import Shop from "../shop"
+
+import useHandleMenu from '../../hooks/useHandleMenu';
+import useProcess from '../../hooks/useProcess';
 
 
 const Container = styled.div`
@@ -104,9 +108,6 @@ const Container = styled.div`
         color: white;
       }
   }
-
-  .product-title{
-  }
   
   .products-foter{
     margin-top: 60px;
@@ -127,6 +128,7 @@ const Container = styled.div`
 
 `;
 
+// SVG with dynamic color
 const Icon = styled("div")<{ src: string }>`
   background-color: #D9D9D9;
   -webkit-mask: url(${props => props.src}) no-repeat center;
@@ -145,6 +147,7 @@ const Icon = styled("div")<{ src: string }>`
 const App = ():JSX.Element => {
   
   const { handleVisible, visible, handleClose } = useHandleMenu()  
+  const { user, products } = useProcess()
   
   const { 
     handleVisible: handleModalVisible, 
@@ -156,7 +159,7 @@ const App = ():JSX.Element => {
   const options: optionProps[] = [
     { title: "History", icon: "assets/icons/book.svg", onClick: handleVisible },
     { title: "Get points", icon: "assets/icons/cash.svg", onClick: handleModalVisible },
-    { title: "Benjamín M.", icon: "" },
+    { title: user.name, icon: "" },
   ];
   
   return (
@@ -164,7 +167,7 @@ const App = ():JSX.Element => {
       <Header
         options={options}
         logo="assets/aerolab-logo.svg"
-        Phill={<Button className="header-button" title="6000" icon={ "assets/icons/coin.svg" } />}
+        Phill={<Button className="header-button" title={`${ user.points }`} icon={ "assets/icons/coin.svg" } />}
       />
 
       <Hero src="assets/header-x1.png" title='Electronics' />
@@ -192,21 +195,19 @@ const App = ():JSX.Element => {
 
 
       <div className="products-grid">
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
-        <Card icon='assets/icons/buy-blue.svg' image='assets/product-pics/iPadMini-x1.png' title='iPhones' subtitle='iPhone' iconSecondary='assets/icons/buy-white.svg' iconTertiary='assets/icons/coin.svg' children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } />
+        {products.map(product => (
+          <Card 
+            key={ product._id }
+            icon='assets/icons/buy-blue.svg' 
+            image={ product.img.url } 
+            title={ product.category } 
+            subtitle={ product.name } 
+            price = { product.cost }
+            iconSecondary='assets/icons/buy-white.svg' 
+            iconTertiary='assets/icons/coin.svg' 
+            children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } 
+          />
+        ))}
         
       </div>
 

@@ -100,6 +100,7 @@ export interface params {
 
   title: string;
   subtitle: string;
+  price: number;
   image: string;
   icon?: string;
   iconSecondary?: string;
@@ -138,7 +139,7 @@ const App = (params:params):JSX.Element => {
 
       <div className={ params.className  + "__panel" }>
         <img src={ params.iconSecondary } alt="" className={ params.className + "__icon" }/>
-        <span className={ params.className + "__price"}>12.000 <img src={ params.iconTertiary } /> </span>
+        <span className={ params.className + "__price"}>{ params.price }<img src={ params.iconTertiary } /> </span>
         { params.children }
       </div>
 
