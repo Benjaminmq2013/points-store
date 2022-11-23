@@ -10,7 +10,7 @@ import History from "../history"
 import Shop from "../points-store"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
-import useProcess from '../../hooks/useProcess';
+import useProcess from '../../hooks/useGetData';
 import useHandleFilters from '../../hooks/useHandleFilters';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';

@@ -4,7 +4,7 @@ import { T } from "../interface"
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setProducts, setLoading, setUser } from '../store/slices/shop';
-import useFetch from "../api/fetchData";
+import fetchData from "../api/fetchData";
 import { useEffect } from 'react';
 
 
@@ -26,14 +26,14 @@ const useProcess = () => {
 
         // Poduct List
       
-        useFetch<T.products[]>(
+        fetchData<T.products[]>(
           { entryPoint: "/products", onLoading: (loading: boolean) => handleLoading(loading) },
           { setData: (products: T.products[]) => handleSetProducts(products) }
         );
       
         // User Information
       
-        useFetch<T.user>(
+        fetchData<T.user>(
           { entryPoint: "/user/me", onLoading: (loading: boolean) => handleLoading(loading) },
           { setData: (user: T.user) => handleSetUser(user) }
         );

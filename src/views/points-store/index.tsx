@@ -4,6 +4,9 @@ import Pack, { params as packProps } from "../../components/stack"
 import { useState } from 'react';
 import Summary, { property } from "../../components/summary"
 import Button from "../../components/button"
+import fetchData from '../../api/fetchData';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../store/slices/shop';
 
 const Container = styled("div")`
   // modal variables
@@ -118,6 +121,9 @@ const App = (params: params) => {
   const handleSelectPremium = () => setSelected("premium");
   const handleSelectGold = () => setSelected("gold");
   
+  const dispatch = useDispatch()
+  const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
+  const handleGetPoints = () => fetchData({ method: "post", onLoading: (loading: boolean) => handleLoading(loading), entryPoint: "/user/points", data: { "amount": 1000 }   })
 
   const data: packProps[] = [
     {
@@ -200,7 +206,7 @@ const App = (params: params) => {
         <Summary
           title="Summary:"
           values={ selected === "basic" ? basicSelected : selected === "premium" ? premiumSelected : goldSelected  }
-          button={ <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" /> }
+          button={ <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" onClick={ handleGetPoints } /> }
           footerLinks={links}
         />
       </Modal>
