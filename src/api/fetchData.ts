@@ -32,11 +32,8 @@ const useFetch = <Types,>( params: params, callback: { setData?: (data: Types) =
         callback.setData && callback.setData(response.data)
     })
     .catch((error) => {
-        
         console.log(error)
     })
-
-    
     
    
 }

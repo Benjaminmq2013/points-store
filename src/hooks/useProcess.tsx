@@ -4,7 +4,7 @@ import { T } from "../interface"
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setProducts, setLoading, setUser } from '../store/slices/shop';
-import useFetch from './useFetch';
+import useFetch from "../api/fetchData";
 import { useEffect } from 'react';
 
 

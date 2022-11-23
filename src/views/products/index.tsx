@@ -11,6 +11,7 @@ import Shop from "../shop"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useProcess from '../../hooks/useProcess';
+import useHandleFilters from '../../hooks/useHandleFilters';
 
 
 const Container = styled.div`
@@ -146,8 +147,10 @@ const Icon = styled("div")<{ src: string }>`
 
 const App = ():JSX.Element => {
   
+  const { filteredProducts, handleHighest, handleLowest, handleRecent } = useHandleFilters()
   const { handleVisible, visible, handleClose } = useHandleMenu()  
-  const { user, products } = useProcess()
+  const { user } = useProcess()
+
   
   const { 
     handleVisible: handleModalVisible, 
@@ -181,9 +184,9 @@ const App = ():JSX.Element => {
         </div>
 
         <div className="product-filters__buttons">
-          <Button title='Most recent' onClick={() => {}} className="filter-button" />
-          <Button title='Lowest price' onClick={() => {}} className="filter-button" />
-          <Button title='Highest price' onClick={() => {}} className="filter-button" />
+          <Button title='Most recent' onClick={ handleRecent } className="filter-button" />
+          <Button title='Lowest price' onClick={ handleLowest } className="filter-button" />
+          <Button title='Highest price' onClick={ handleHighest } className="filter-button" />
         </div>
 
         <div className="product-navigate__buttons">          
@@ -195,7 +198,7 @@ const App = ():JSX.Element => {
 
 
       <div className="products-grid">
-        {products.map(product => (
+        {filteredProducts.map(product => (
           <Card 
             key={ product._id }
             icon='assets/icons/buy-blue.svg' 
