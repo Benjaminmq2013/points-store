@@ -12,8 +12,11 @@ import Shop from "../points-store"
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useGetData from '../../hooks/useGetData';
 import useHandleFilters from '../../hooks/useHandleFilters';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
+import fetchData from '../../api/fetchData';
+import { T } from '../../interface';
+import { setLoading } from '../../store/slices/shop';
 
 
 const Container = styled.div`
@@ -162,8 +165,27 @@ const App = ():JSX.Element => {
   
   const { filteredProducts, filters, handleHighest, handleLowest, handleRecent, handleNextPage, handleLastPage  } = useHandleFilters()
   const { handleVisible, visible, handleClose } = useHandleMenu()  
-  const { user, getUser } = useGetData()
+  const { user, getUser, isLoading } = useGetData()
 
+  const dispatch = useDispatch()
+  const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
+
+  const handleRedeem = (productId: string) => {
+    if( isLoading ) {
+      console.log("Espera un momento...")
+      return
+    }
+    
+    fetchData({ 
+      method: "post", 
+      entryPoint: "/redeem", 
+      data: { "productId": productId },
+      
+      onLoading: (loading: boolean) => handleLoading(loading), 
+      then: getUser
+    })
+
+  }
   
   const { 
     handleVisible: handleModalVisible, 
@@ -221,7 +243,7 @@ const App = ():JSX.Element => {
             price = { product.cost }
             iconSecondary='assets/icons/buy-white.svg' 
             iconTertiary='assets/icons/coin.svg' 
-            children={ <Button title='Redeem mow' onClick={() => {}} className="buy-button" /> } 
+            children={ <Button title='Redeem mow' onClick={() => handleRedeem( product._id )} className="buy-button" /> } 
           />
         ))}
         
@@ -238,8 +260,8 @@ const App = ():JSX.Element => {
         <hr className="product__hr product-footer_hr" />
       </footer>
 
-      <History visible={ visible } handleClose={ handleClose } />
-      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } />
+      <History visible={ visible } handleClose={ handleClose } history = { user.redeemHistory } />
+      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading />
       
     </Container>
   );

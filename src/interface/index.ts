@@ -19,10 +19,19 @@ export declare namespace T{
     name: string;
     points: number;
     createDate: string;
-    redeemHistory?: (null)[] | null;
+    redeemHistory?: (HistoryEntity)[] | null;
     __v: number;
   }
 
+  interface HistoryEntity {
+    img: Img;
+    createDate: string;
+    _id: string;
+    name: string;
+    cost: number;
+    category: string;
+    productId: string;
+  }
 
 }
 

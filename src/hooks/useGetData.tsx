@@ -40,9 +40,10 @@ const useGetData = () => {
     useEffect(() => {
       getProducts()
       getUser()
+      isLoading
     }, [])
     
-
+    console.log(user)
 
   return { products, user, isLoading, getProducts, getUser }
 }

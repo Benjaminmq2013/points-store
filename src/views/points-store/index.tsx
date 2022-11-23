@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Summary, { property } from "../../components/summary"
 import Button from "../../components/button"
 import fetchData from '../../api/fetchData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../../store/slices/shop';
 
 const Container = styled("div")`
@@ -109,6 +109,7 @@ const Container = styled("div")`
 
 interface params{
     visible: boolean;
+    isLoading: boolean;
     handleClose: () => void
     updateUserInfo: () => void
 }
@@ -121,20 +122,25 @@ const App = (params: params) => {
   const handleSelectBasic = () => setSelected("basic");
   const handleSelectPremium = () => setSelected("premium");
   const handleSelectGold = () => setSelected("gold");
-  
-  const dispatch = useDispatch()
   const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
+  
+  const dispatch = useDispatch() 
+   
 
   const handleGetPoints = () => {
+    if( params.isLoading ) {
+      console.log("Espera un momento...") 
+      return
+    }
 
     fetchData({ 
-    method: "post", 
-    entryPoint: "/user/points", 
-    data: { "amount": selected === "basic" ? 1000 : selected === "premium" ? 5000 : selected === "gold" ? 7500 : 0 },
-    
-    onLoading: (loading: boolean) => handleLoading(loading), 
-    then: params.updateUserInfo
-  })
+      method: "post", 
+      entryPoint: "/user/points", 
+      data: { "amount": selected === "basic" ? 1000 : selected === "premium" ? 5000 : selected === "gold" ? 7500 : 0 },
+      
+      onLoading: (loading: boolean) => handleLoading(loading), 
+      then: params.updateUserInfo
+    })
 
   }
 
