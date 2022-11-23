@@ -110,6 +110,7 @@ const Container = styled("div")`
 interface params{
     visible: boolean;
     handleClose: () => void
+    updateUserInfo: () => void
 }
 
 const links:string[] = [ "Contact us", "Terms and conditions", "Refund policies" ]
@@ -123,7 +124,21 @@ const App = (params: params) => {
   
   const dispatch = useDispatch()
   const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
-  const handleGetPoints = () => fetchData({ method: "post", onLoading: (loading: boolean) => handleLoading(loading), entryPoint: "/user/points", data: { "amount": 1000 }   })
+
+  const handleGetPoints = () => {
+
+    fetchData({ 
+    method: "post", 
+    entryPoint: "/user/points", 
+    data: { "amount": selected === "basic" ? 1000 : selected === "premium" ? 5000 : selected === "gold" ? 7500 : 0 },
+    
+    onLoading: (loading: boolean) => handleLoading(loading), 
+    then: params.updateUserInfo
+  })
+
+  }
+
+  
 
   const data: packProps[] = [
     {

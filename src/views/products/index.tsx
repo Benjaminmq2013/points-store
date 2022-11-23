@@ -10,7 +10,7 @@ import History from "../history"
 import Shop from "../points-store"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
-import useProcess from '../../hooks/useGetData';
+import useGetData from '../../hooks/useGetData';
 import useHandleFilters from '../../hooks/useHandleFilters';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -162,7 +162,7 @@ const App = ():JSX.Element => {
   
   const { filteredProducts, filters, handleHighest, handleLowest, handleRecent, handleNextPage, handleLastPage  } = useHandleFilters()
   const { handleVisible, visible, handleClose } = useHandleMenu()  
-  const { user } = useProcess()
+  const { user, getUser } = useGetData()
 
   
   const { 
@@ -239,7 +239,7 @@ const App = ():JSX.Element => {
       </footer>
 
       <History visible={ visible } handleClose={ handleClose } />
-      <Shop handleClose={ handleCloseModal } visible={ modalVisible } />
+      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } />
       
     </Container>
   );

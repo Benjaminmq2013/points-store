@@ -6,6 +6,7 @@ export interface params{
     headers?: object,
     params?: object,  
     data?: object,  
+    then?: () => void
     
     onLoading: (loading: boolean) => void
 }
@@ -16,6 +17,7 @@ const fetchData = <Types,>( params: params, callback?: { setData: (data: Types) 
     const TOKEN:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzc3Njg5NGJmNWY2NjAwMWEyNzNiYTUiLCJpYXQiOjE2Njg3Njk5NDB9.sAjxfiFpgddcITSQlNhLlqMWDbeYTGZfOPK6fwf7VK4"
     
     const config:AxiosRequestConfig = {
+        url: URL,
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -28,7 +30,7 @@ const fetchData = <Types,>( params: params, callback?: { setData: (data: Types) 
   
     
     params.onLoading(true)
-    axios.get(URL, config)
+    axios( config )
     
     .then((response:AxiosResponse<Types>) => {            
         params.onLoading(false)
@@ -37,6 +39,7 @@ const fetchData = <Types,>( params: params, callback?: { setData: (data: Types) 
     .catch((error) => {
         console.log(error)
     })
+    .then(() => params.then && params.then())
     
    
 }

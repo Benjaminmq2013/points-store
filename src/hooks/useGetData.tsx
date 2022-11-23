@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 
 
-const useProcess = () => {
+const useGetData = () => {
 
     const dispatch = useDispatch()
 
@@ -22,27 +22,29 @@ const useProcess = () => {
     const handleSetUser = (user: T.user) => dispatch(setUser(user));
 
 
-    useEffect(() => {
+    // Poduct List
+  
+    const getProducts = () => fetchData<T.products[]>(
+      { entryPoint: "/products", onLoading: (loading: boolean) => handleLoading(loading) },
+      { setData: (products: T.products[]) => handleSetProducts(products) }
+    );
+  
+    // User Information
+   
+    const getUser = () => fetchData<T.user>(
+      { entryPoint: "/user/me", onLoading: (loading: boolean) => handleLoading(loading) },
+      { setData: (user: T.user) => handleSetUser(user) }
+    );
 
-        // Poduct List
-      
-        fetchData<T.products[]>(
-          { entryPoint: "/products", onLoading: (loading: boolean) => handleLoading(loading) },
-          { setData: (products: T.products[]) => handleSetProducts(products) }
-        );
-      
-        // User Information
-      
-        fetchData<T.user>(
-          { entryPoint: "/user/me", onLoading: (loading: boolean) => handleLoading(loading) },
-          { setData: (user: T.user) => handleSetUser(user) }
-        );
-      
+
+    useEffect(() => {
+      getProducts()
+      getUser()
     }, [])
     
 
 
-  return { products, user, isLoading }
+  return { products, user, isLoading, getProducts, getUser }
 }
 
-export default useProcess
+export default useGetData
