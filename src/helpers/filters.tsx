@@ -15,3 +15,12 @@ export const filterByPrice = (filteredData:T.products[], filter: filterTypes["so
     
 }
 
+export const filterByPage = (filteredData:T.products[], filter: filterTypes["pagination"] ):T.products[] => {
+    
+  let from = (filter * 16) - 16
+  let to = (filter * 16)
+
+  return filteredData.slice(from, to)
+    
+}
+

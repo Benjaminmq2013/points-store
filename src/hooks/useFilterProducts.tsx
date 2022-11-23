@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { filterTypes } from '../interface/filterTypes';
 import { RootState } from '../store/index';
-import { filterByPrice } from '../helpers/filters';
+import { filterByPrice, filterByPage } from '../helpers/filters';
 
 
 const useFilterProducts = ( filters: filterTypes ) => {
@@ -10,8 +10,9 @@ const useFilterProducts = ( filters: filterTypes ) => {
     // This variable prevents us from making another request
     let filteredData = data;
 
-    // filtering
+    // Passing data through every filter
     filteredData = filterByPrice(filteredData, filters.sortBy)
+    filteredData = filterByPage(filteredData, filters.pagination)
     
 
   return filteredData

@@ -7,11 +7,13 @@ import Button from "../../components/button"
 import Hero from "../../components/hero"
 import Card from '../../components/card';
 import History from "../history"
-import Shop from "../shop"
+import Shop from "../points-store"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useProcess from '../../hooks/useProcess';
 import useHandleFilters from '../../hooks/useHandleFilters';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 
 const Container = styled.div`
@@ -68,13 +70,21 @@ const Container = styled.div`
   .filter-button{
     background-color: #EDEDED;
     color: #A3A3A3;
+
+      :hover{
+        background-color: #0AD4FA;
+        color: white;
+      }
+
+      :active{
+        transform: scale(.95);
+      }
   }
-  .filter-button:hover{
-    background-color: #0AD4FA;
-    color: white;
-  }
+  
+  
   .btn-selected{
     background-color: #0AD4FA;
+    color: white;
   }
 
   .product-navigate__buttons{
@@ -127,6 +137,8 @@ const Container = styled.div`
     width: 100%;
   }
 
+  
+
 `;
 
 // SVG with dynamic color
@@ -146,8 +158,9 @@ const Icon = styled("div")<{ src: string }>`
 
 
 const App = ():JSX.Element => {
+  const data = useSelector((state: RootState) => state.shopReducer.products )
   
-  const { filteredProducts, handleHighest, handleLowest, handleRecent } = useHandleFilters()
+  const { filteredProducts, filters, handleHighest, handleLowest, handleRecent, handleNextPage, handleLastPage  } = useHandleFilters()
   const { handleVisible, visible, handleClose } = useHandleMenu()  
   const { user } = useProcess()
 
@@ -178,20 +191,20 @@ const App = ():JSX.Element => {
       <div className="products-filters__container">
 
         <div className="product-filters__tags">
-          <span className="product-title">16 of 32 products</span>
+          <span className="product-title">{ filters.pagination * 16 } of { data.length } products</span>
           <hr className="product-title__hr" />
           <span className="product-subtitle">Sort By:</span>
         </div>
 
         <div className="product-filters__buttons">
-          <Button title='Most recent' onClick={ handleRecent } className="filter-button" />
-          <Button title='Lowest price' onClick={ handleLowest } className="filter-button" />
-          <Button title='Highest price' onClick={ handleHighest } className="filter-button" />
+          <Button title='Most recent' onClick={ handleRecent } className={`filter-button ${ filters.sortBy === 'recent' && "btn-selected" }`} />
+          <Button title='Lowest price' onClick={ handleLowest } className={`filter-button ${ filters.sortBy === 'lowest' && "btn-selected" }`} />
+          <Button title='Highest price' onClick={ handleHighest } className={`filter-button ${ filters.sortBy === 'highest' && "btn-selected" }`} />
         </div>
 
         <div className="product-navigate__buttons">          
-          <Icon className="navigate-button" src="assets/icons/arrow-left.svg" ></Icon>
-          <Icon className="navigate-button" src="assets/icons/arrow-right.svg" ></Icon>
+          <Icon className="navigate-button" src="assets/icons/arrow-left.svg" onClick={ handleLastPage } ></Icon>
+          <Icon className="navigate-button" src="assets/icons/arrow-right.svg" onClick={ handleNextPage } ></Icon>
         </div>
       </div>
       <hr className="product__hr" />
@@ -216,10 +229,10 @@ const App = ():JSX.Element => {
 
       <footer className="products-foter">
         <div className="row">
-          <span className="product-title">16 of 32 products</span>
+          <span className="product-title">{ filters.pagination * 16 } of { data.length } products</span>
           <div className="product-navigate__buttons">          
-            <Icon className="navigate-button" src="assets/icons/arrow-left.svg" ></Icon>
-            <Icon className="navigate-button" src="assets/icons/arrow-right.svg" ></Icon>
+            <Icon className="navigate-button" src="assets/icons/arrow-left.svg" onClick={ handleLastPage } ></Icon>
+            <Icon className="navigate-button" src="assets/icons/arrow-right.svg" onClick={ handleNextPage } ></Icon>
           </div>
         </div>
         <hr className="product__hr product-footer_hr" />
