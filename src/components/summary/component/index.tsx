@@ -120,7 +120,9 @@ const App = (params:params):JSX.Element => {
           </div>
         ))}
 
-        { params.button }
+          <div className={ params.className + "button_container"}>
+            { params.button }            
+          </div>
         <span className={params.className + "__bottom-text"}>By clicking you accept our <u>Terms and conditions</u> </span>
       </div>
 

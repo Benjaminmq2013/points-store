@@ -32,7 +32,7 @@ export interface params {
 const App = (params:params):JSX.Element => {
     params = { ...{ className: 'container' }, ...params }
 
-    return <Icon src={ params.src } className={ params.className } />
+    return <Icon src={ params.src } className={ params.className } onClick={ params.onClick } />
 }
 
 export default App

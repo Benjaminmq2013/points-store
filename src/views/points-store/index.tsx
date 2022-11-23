@@ -4,8 +4,9 @@ import Pack, { params as packProps } from "../../components/stack"
 import { useState } from 'react';
 import Summary, { property } from "../../components/summary"
 import Button from "../../components/button"
+import Icon from "../../components/Icon"
 import fetchData from '../../api/fetchData';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setLoading } from '../../store/slices/shop';
 
 const Container = styled("div")`
@@ -102,6 +103,20 @@ const Container = styled("div")`
   .shop-button__icon{
     width: 22px;
     height: 19px;
+  }
+
+  .store-loading-icon{
+    position: absolute;
+    right: initial;
+    bottom: 10px;
+    right: -40px;
+    height: 31px;
+    width: 31px;
+  }
+
+  .store-summarybutton_container{
+    display: flex;
+    position: relative;
   }
 
 `;
@@ -228,8 +243,13 @@ const App = (params: params) => {
         <Summary
           title="Summary:"
           values={ selected === "basic" ? basicSelected : selected === "premium" ? premiumSelected : goldSelected  }
-          button={ <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" onClick={ handleGetPoints } /> }
-          
+          className="store-summary"
+          button={ 
+          <>
+            <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" onClick={ handleGetPoints } /> 
+            {params.isLoading && <Icon className="loading-icon store-loading-icon" src="assets/icons/loading.svg" /> }
+          </>
+          }
           footerLinks={links}
         />
       </Modal>

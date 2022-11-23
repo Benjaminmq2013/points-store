@@ -3,11 +3,10 @@ import { filterTypes } from '../interface/filterTypes';
 
 
 export const filterByPrice = (filteredData:T.products[], filter: filterTypes["sortBy"] ):T.products[] => {
-    
-    switch (filter) {
-      case "recent":
+  switch (filter) {
+    case "recent":
         return filteredData;
-      case "highest":
+        case "highest":
         return filteredData.slice().sort((a, b) => b.cost - a.cost);
       case "lowest":
         return filteredData.slice().sort((a, b) => a.cost - b.cost);
@@ -16,7 +15,8 @@ export const filterByPrice = (filteredData:T.products[], filter: filterTypes["so
 }
 
 export const filterByPage = (filteredData:T.products[], filter: filterTypes["pagination"] ):T.products[] => {
-    
+  
+  console.log(filter)
   let from = (filter * 16) - 16
   let to = (filter * 16)
 
