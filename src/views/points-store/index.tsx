@@ -129,6 +129,7 @@ const App = (params: params) => {
 
   const handleGetPoints = () => {
     if( params.isLoading ) {
+      console.log(params.isLoading)
       console.log("Espera un momento...") 
       return
     }
@@ -228,6 +229,7 @@ const App = (params: params) => {
           title="Summary:"
           values={ selected === "basic" ? basicSelected : selected === "premium" ? premiumSelected : goldSelected  }
           button={ <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" onClick={ handleGetPoints } /> }
+          
           footerLinks={links}
         />
       </Modal>

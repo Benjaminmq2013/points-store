@@ -8,6 +8,7 @@ import Hero from "../../components/hero"
 import Card from '../../components/card';
 import History from "../history"
 import Shop from "../points-store"
+import Icon from "../../components/Icon"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useGetData from '../../hooks/useGetData';
@@ -17,6 +18,7 @@ import { RootState } from '../../store';
 import fetchData from '../../api/fetchData';
 import { T } from '../../interface';
 import { setLoading } from '../../store/slices/shop';
+import { rotate } from './animations';
 
 
 const Container = styled.div`
@@ -140,23 +142,46 @@ const Container = styled.div`
     width: 100%;
   }
 
+  .products-header__links_container div:last-of-type a {
+    
+    :hover{
+      color: #616161;
+      border: transparent;
+    }
+
+  }
+
+  .loading-icon{
+    animation: ${rotate} 2s linear infinite;
+    right: 25px;
+    bottom: 25px;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    background-color: #319DFC;
+      :hover{
+        background-color: #319DFC;
+      }
+  }
   
 
 `;
 
 // SVG with dynamic color
-const Icon = styled("div")<{ src: string }>`
-  background-color: #D9D9D9;
-  -webkit-mask: url(${props => props.src}) no-repeat center;
-  mask: url(${ props => props.src }) no-repeat center;
-  height: 48px;
-  width: 48px;
-  transition: .3s;
+// const Icon = styled("div")<{ src: string }>`
+//   background-color: #D9D9D9;
+//   -webkit-mask: url(${props => props.src}) no-repeat center;
+//   mask: url(${ props => props.src }) no-repeat center;
+//   height: 48px;
+//   width: 48px;
+//   transition: .3s;
 
-  :hover{
-    background-color: #36afff;
-  }
-`
+//   :hover{
+//     background-color: #36afff;
+//   }
+// `
+
+
 
 
 
@@ -203,6 +228,7 @@ const App = ():JSX.Element => {
   return (
     <Container>
       <Header
+        className="products-header"
         options={options}
         logo="assets/aerolab-logo.svg"
         Phill={<Button className="header-button" title={`${ user.points }`} icon={ "assets/icons/coin.svg" } />}
@@ -259,9 +285,10 @@ const App = ():JSX.Element => {
         </div>
         <hr className="product__hr product-footer_hr" />
       </footer>
-
+      
+      {isLoading && <Icon className="loading-icon" src="assets/icons/loading.svg" /> }
       <History visible={ visible } handleClose={ handleClose } history = { user.redeemHistory } />
-      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading />
+      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading={ isLoading } />
       
     </Container>
   );

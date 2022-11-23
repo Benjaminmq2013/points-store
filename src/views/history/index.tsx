@@ -42,13 +42,14 @@ const App = (params: params) => {
         icon="assets/icons/book-blue.svg"
         closeIcon="assets/icons/close.svg"
       >
-        {params.history?.map(elem => (
+        {params.history?.map((elem, i) => (
           <Item
             image={ elem.img.url }
             title={ elem.category }
             subtitle={ elem.name }
             iconSecondary="assets/icons/coin.svg"
             icon="assets/icons/buy-blue.svg"
+            key={ i }
             span={`${ elem.cost }`}
           />
         ))}
