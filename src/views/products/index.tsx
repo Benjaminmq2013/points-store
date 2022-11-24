@@ -1,7 +1,6 @@
 
 import styled from 'styled-components';
 
-
 import Header, { optionProps } from "../../components/header"
 import Button from "../../components/button"
 import Hero from "../../components/hero"
@@ -9,6 +8,7 @@ import Card from '../../components/card';
 import History from "../history"
 import Shop from "../points-store"
 import Icon from "../../components/Icon"
+import Alert from "../../components/alerts"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useGetData from '../../hooks/useGetData';
@@ -16,9 +16,10 @@ import useHandleFilters from '../../hooks/useHandleFilters';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import fetchData from '../../api/fetchData';
-import { T } from '../../interface';
 import { setLoading } from '../../store/slices/shop';
 import { rotate } from './animations';
+import useAlert from '../../hooks/useAlert';
+import { T } from '../../interface';
 
 
 const Container = styled.div`
@@ -118,14 +119,37 @@ const Container = styled.div`
     font-size: 18px;
     padding: 11px 60px;
     margin-top: 17px;
+    position: relative;
       :hover{
         /* box-shadow: 0px 0px 6px white; */
         background-color: #70eaff;
         color: white;
       }
   }
+
+  .btn-disabled{
+    background-color: #FF7A7A;
+    color: white;
+    padding-left: 30px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: row-reverse;
+    :hover{
+      color: white;
+      background-color: #FF7A7A;
+    }
+  }
+
+  .buy-button__icon{
+    animation: ${ rotate } 2s linear infinite ; 
+    margin-left: 10px;
+    position: absolute;
+    right: 30px;
+    height: 16px;
+    width: 16px;
+  }
   
-  .products-foter{
+  .products-footer{
     margin-top: 60px;
     margin-bottom: 74px;
     padding: 0 var(--view-padding);
@@ -163,8 +187,75 @@ const Container = styled.div`
         background-color: #319DFC;
       }
   }
+
   
 
+  .alert-warning{
+    background-color: #5A8CD8;
+  }
+
+  .alert-success{
+    background-color: #5AD866;
+  }
+  
+  .points-remaining{
+    color: white;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  /* responsive design */
+  @media only screen and (max-width: 1700px){
+    .products-grid{
+      grid-template-columns: repeat(4, 1fr)
+    }
+  }
+  
+  @media only screen and (max-width: 1400px){
+    --view-padding: 50px;    
+  }
+  
+  @media only screen and (max-width: 1150px){
+    .products-grid{
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .products-filters__container{
+      flex-direction: column;
+      position: relative;
+    }
+    .product-filters__tags{
+      margin-bottom: 18px;
+    }
+    .product__hr{
+      margin-top: 70px;
+    }
+    .product-navigate__buttons{
+      margin: 0;
+      position: absolute;
+      right: 59px;
+      top: 0;
+      div{
+        height: 40px;
+        width: 40px;
+        }
+    }
+
+    .row{
+      position: relative;
+    }
+    
+  }
+
+  @media only screen and (max-width: 1150px){
+    .header-button{
+      margin-right: 28px;
+    }
+
+    .products-footer{
+      margin-top: 35px;
+      margin-bottom: 48px;
+    }
+  }
 `;
 
 // SVG with dynamic color
@@ -188,6 +279,8 @@ const Container = styled.div`
 const App = ():JSX.Element => {
   const data = useSelector((state: RootState) => state.shopReducer.products )
   
+  const { alertVisible, handleHideError, handleHideSucess, handleHideWarning, handleShowError, handleShowSucess, handleShowWarning } = useAlert()
+  
   const { filteredProducts, filters, handleHighest, handleLowest, handleRecent, handleNextPage, handleLastPage  } = useHandleFilters()
   const { handleVisible, visible, handleClose } = useHandleMenu()  
   const { user, getUser, isLoading } = useGetData()
@@ -195,19 +288,23 @@ const App = ():JSX.Element => {
   const dispatch = useDispatch()
   const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
 
-  const handleRedeem = (productId: string) => {
-    if( isLoading ) {
-      console.log("Espera un momento...")
+  const handleRedeem = (product: T.products) => {    
+    if( isLoading ) return    
+    if( user.points < product.cost ){
+      handleShowError()
       return
     }
     
     fetchData({ 
       method: "post", 
       entryPoint: "/redeem", 
-      data: { "productId": productId },
+      data: { "productId": product._id },
       
       onLoading: (loading: boolean) => handleLoading(loading), 
-      then: getUser
+      then: () => {
+        getUser()
+        handleShowSucess()
+      }
     })
 
   }
@@ -260,6 +357,7 @@ const App = ():JSX.Element => {
 
       <div className="products-grid">
         {filteredProducts.map(product => (
+
           <Card 
             key={ product._id }
             icon='assets/icons/buy-blue.svg' 
@@ -269,13 +367,24 @@ const App = ():JSX.Element => {
             price = { product.cost }
             iconSecondary='assets/icons/buy-white.svg' 
             iconTertiary='assets/icons/coin.svg' 
-            children={ <Button title='Redeem mow' onClick={() => handleRedeem( product._id )} className="buy-button" /> } 
+            className={user.points < product.cost ? "not-enough-money" : ""}
+            children={ 
+              <>
+                <Button 
+                  title={ user.points < product.cost ? "Not enough points" : "Redeem mow" } 
+                  className={`buy-button ${user.points < product.cost ? "btn-disabled" : ""}`} 
+                  icon={ isLoading === true ? "assets/icons/loading.svg" : ""} 
+                  onClick={() => handleRedeem( product )} 
+                  /> 
+                {user.points < product.cost && <span className="points-remaining">You need { product.cost - user.points } points more</span>}
+              </>
+            } 
           />
         ))}
         
       </div>
 
-      <footer className="products-foter">
+      <footer className="products-footer">
         <div className="row">
           <span className="product-title">{ filters.pagination * 16 } of { data.length } products</span>
           <div className="product-navigate__buttons">          
@@ -288,8 +397,13 @@ const App = ():JSX.Element => {
       
       {isLoading && <Icon className="loading-icon" src="assets/icons/loading.svg" /> }
       <History visible={ visible } handleClose={ handleClose } history = { user.redeemHistory } />
-      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading={ isLoading } />
+      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading={ isLoading } onSuccessAlert={ handleShowWarning } />
+
+      <Alert className="alert-error" title='You need 3000 points more to claim it!' visible={ alertVisible.error } handleHideAlert={ handleHideError } />
+      <Alert className="alert-success" title='Purchase successful!' visible={ alertVisible.success } handleHideAlert={ handleHideSucess } />
+      <Alert className="alert-warning" title='7500 points were added!' visible={ alertVisible.warning } handleHideAlert={ handleHideWarning } />
       
+          
     </Container>
   );
 }

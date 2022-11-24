@@ -18,6 +18,10 @@ const Container = styled("div") <{ src: string }>`
 
     font-size: 64px;
   }
+
+  @media only screen and (max-width: 1080px){
+    height: 279px;
+  }
 `;
 
 export interface params {

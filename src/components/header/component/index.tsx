@@ -38,28 +38,33 @@ const Container = styled("div")<{ className?: string, hover: number }>`
     border-bottom: 2px solid transparent;
     border-top: 2px solid transparent;
     padding: 18px 0;   
-  
+    
   }
-
+  
   .${ props => props.className + "__links_container"} {
     margin-left: auto;
     display: flex;
     align-items: center;
   }
-
+  
   .${ props => props.className + "__icon"} {
     margin-right: 17px;
     width: 28px;
     height: 22px;   
     transition: .3s;
   }   
-
+  
   .${ props => props.className + "__links_wrapper"}{
     display: flex;
     align-items: center;
     
   }
   
+  @media only screen and (max-width: 850px){
+    .${ props => props.className + "__logo"} {
+      margin-left: 28px;
+    }
+  }
 `;
 
 const Icon = styled("div")<{ src:string }>`
@@ -122,7 +127,7 @@ const App = (params:params):JSX.Element => {
                 onMouseOver = { () => handleMouseOver(i + 1) } 
                 onMouseLeave={ handleMouseLeave } 
                 onClick={ opt.onClick } /> 
-              }
+              } 
 
               <a 
                 className={ params.className + "__link" } 

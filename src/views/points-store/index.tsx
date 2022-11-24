@@ -127,6 +127,7 @@ interface params{
     isLoading: boolean;
     handleClose: () => void
     updateUserInfo: () => void
+    onSuccessAlert: () => void
 }
 
 const links:string[] = [ "Contact us", "Terms and conditions", "Refund policies" ]
@@ -155,7 +156,10 @@ const App = (params: params) => {
       data: { "amount": selected === "basic" ? 1000 : selected === "premium" ? 5000 : selected === "gold" ? 7500 : 0 },
       
       onLoading: (loading: boolean) => handleLoading(loading), 
-      then: params.updateUserInfo
+      then: () => {
+        params.updateUserInfo
+        params.onSuccessAlert()
+      }
     })
 
   }
@@ -246,7 +250,7 @@ const App = (params: params) => {
           className="store-summary"
           button={ 
           <>
-            <Button title="Chargue Now" className="shop-button" icon="assets/icons/cart.svg" onClick={ handleGetPoints } /> 
+            <Button title="Chargue Now" className="shop-button" icon={ "assets/icons/cart.svg"} onClick={ handleGetPoints } /> 
             {params.isLoading && <Icon className="loading-icon store-loading-icon" src="assets/icons/loading.svg" /> }
           </>
           }

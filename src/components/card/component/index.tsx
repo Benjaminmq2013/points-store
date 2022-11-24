@@ -57,9 +57,9 @@ const Container = styled("div")`
   }
   
   .${(props) => props.className + "__wrapper"} {
-    width: 228px;
+    width: 100%;
   }
-    
+  
   .${(props) => props.className + "__panel"} {
     position: absolute;
     height: 100%;
@@ -72,11 +72,11 @@ const Container = styled("div")`
     transition: var(--animation-duration);
     bottom: -100%;
   }
-
-    :hover .${(props) => props.className + "__panel"}{
-      transform: translateY(-100%);
-    }
-
+  
+  :hover .${(props) => props.className + "__panel"}{
+    transform: translateY(-100%);
+  }
+  
   .${"__secondary-icon"} {
     margin-top: 10px;
   }
@@ -88,16 +88,39 @@ const Container = styled("div")`
     gap: 8px;
     margin-top: 20px;
   }
-
- 
   
-`;
+  @media only screen and (max-width: 1250px){
+    width: calc(240px - (23px * 2));
+    height: 240px; 
+    
+    .${(props) => props.className + "__image-container"}{
+      width: 200px;
+      height: 150px;
+    }
+    .${(props) => props.className + "__image"} {
+      height: 100%;
+      width: 100%;
+    }
+    
+    .${(props) => props.className + "__hr"} {
+      width: 191px;
+    }
+    .${(props) => props.className + "__image-container"} {
+      margin-top: 0;
+    }
+  }
+  
+  .${(props) => props.className + "__title"} {
+    
+  }
+  
+  `;
 
 export interface params {
   onClick?: () => void;
   style?: CSSProperties;
   className?: string;
-
+  
   title: string;
   subtitle: string;
   price: number;
@@ -124,7 +147,7 @@ const App = (params:params):JSX.Element => {
   params = { ...{ className: 'container' }, ...params }
 
   return (
-    <Container className={ params.className } >
+    <Container className={ params.className } onClick={ params.onClick } >
       <figure className={ params.className + "__image-container" }>
         <img src={ params.icon } alt="" className={ params.className + "__icon" }/>
         <img src={ params.image } alt="" className={ params.className + "__image" }/>

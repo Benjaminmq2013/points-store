@@ -54,7 +54,7 @@ const App = (params:params):JSX.Element => {
         {params.icon && (
           <img
             src={params.icon}
-            alt=""
+            alt="icon"
             className={params.className + "__icon"}
             onClick={params.onClick}
           />
