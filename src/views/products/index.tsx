@@ -216,6 +216,10 @@ const Container = styled.div`
   }
   
   @media only screen and (max-width: 1150px){
+    .buy-button{
+      padding-left: 40px;
+      padding-right: 40px;
+    }
     .products-grid{
       grid-template-columns: repeat(3, 1fr);
     }
@@ -250,29 +254,102 @@ const Container = styled.div`
     .header-button{
       margin-right: 28px;
     }
-
+    
     .products-footer{
       margin-top: 35px;
       margin-bottom: 48px;
     }
+    
+    .buy-button{
+      font-size: 11px;
+    }
+  }
+
+  @media only screen and (max-width: 680px){
+    --view-padding: 20px;   
+    .products-filters__container {
+      margin-top: 43px;
+    }
+    .product-filters__tags{
+      margin-right: auto;
+    }
+    .product-filters__buttons{
+      gap: 0;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0;
+    }
+    .filter-button{
+      font-size: 15px;
+    }
+    .header-button{
+      font-size: 13px;
+      padding: 5px 18px;
+      margin-right: 19px;
+    }
+
+    .link_1{
+      display: none;
+    }
+    .link_2{
+      display: none;
+    }
+
+    .products-header__link{
+      margin-right: 14px;
+    }
+
+    .products-header__logo{
+      margin-left: 16px;
+    }
+
+    .header-button__icon{
+      height: 20px;
+      width: 20px;
+    }
+
+    .product-title{
+      font-size: 17px;
+    }
+    .product-subtitle{
+      font-size: 17px;
+    }
+
+    .product-navigate__buttons{
+      right: 19px;
+      top: -8px;
+    }
+    .products-grid{
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: center;
+    }
+  }
+
+  @media only screen and (max-width: 425px){
+    .filter-button{
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  @media only screen and (max-width: 393px){
+    .filter-button{
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 14px;
+    }
+
+    .products-grid{
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+
+    .product-navigate__buttons{
+      height: 69px;
+      width: 69px;
+    }
   }
 `;
-
-// SVG with dynamic color
-// const Icon = styled("div")<{ src: string }>`
-//   background-color: #D9D9D9;
-//   -webkit-mask: url(${props => props.src}) no-repeat center;
-//   mask: url(${ props => props.src }) no-repeat center;
-//   height: 48px;
-//   width: 48px;
-//   transition: .3s;
-
-//   :hover{
-//     background-color: #36afff;
-//   }
-// `
-
-
 
 
 

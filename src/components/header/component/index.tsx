@@ -57,7 +57,6 @@ const Container = styled("div")<{ className?: string, hover: number }>`
   .${ props => props.className + "__links_wrapper"}{
     display: flex;
     align-items: center;
-    
   }
   
   @media only screen and (max-width: 850px){
@@ -65,14 +64,26 @@ const Container = styled("div")<{ className?: string, hover: number }>`
       margin-left: 28px;
     }
   }
-`;
+  @media only screen and (max-width: 700px){
+    .${ props => props.className + "__logo"} {
+      margin-left: 28px;
+    }
+    .${ props => props.className + "__link"} {
+      font-size: 19px;
+    }
+    .${ props => props.className + "__icon"}{
+      margin-right: 10px;
+    }
+  }
+ 
+  `;
 
 const Icon = styled("div")<{ src:string }>`
   background-color: #646464;
   -webkit-mask: url(logo.svg) no-repeat center;
   mask: url(${ props => props.src }) no-repeat center;
   cursor: pointer;
-`
+  `
 
 export interface optionProps{
   title: string

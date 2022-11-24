@@ -15,14 +15,30 @@ const Container = styled("div") <{ src: string }>`
     color: white;
     bottom: 33px;
     left: 122px;
-
+    
     font-size: 64px;
   }
-
+  
   @media only screen and (max-width: 1080px){
     height: 279px;
   }
-`;
+  
+  @media only screen and (max-width: 768px){
+    height: 208px;
+
+    .${(props) => props.className + "__header"} {
+      left: 67px;
+      font-size: 49px;
+    }
+  }
+
+  @media only screen and (max-width: 415px){
+    .${props => props.className + "__header"}{
+      font-size: 30px;
+      left: 20px;
+    }
+  }
+  `;
 
 export interface params {
   onClick?: () => void;

@@ -6,7 +6,7 @@ const Container = styled("div")`
   padding: 0 23px;
   margin-top: 42px;
   height: 276px;
-  width: calc(276px - (23px * 2));  
+  width: calc(276px - (23px * 2));
   box-shadow: 2px 2px 4px #00000020;
   background-color: white;
   border-radius: 11px;
@@ -18,7 +18,7 @@ const Container = styled("div")`
   flex-direction: column;
   align-items: center;
 
-  --animation-duration: .2s;
+  --animation-duration: 0.2s;
 
   .${(props) => props.className + "__icon"} {
     position: absolute;
@@ -32,22 +32,22 @@ const Container = styled("div")`
     margin: 0;
     margin-top: 12px;
   }
-  
+
   .${(props) => props.className + "__hr"} {
-    border: 1px solid #D9D9D9;
+    border: 1px solid #d9d9d9;
     width: 228px;
     height: 0px;
     margin-bottom: 21px;
     margin-top: 0;
   }
-  
+
   .${(props) => props.className + "__title"} {
     font-size: 16px;
-    color: #A3A3A3;
+    color: #a3a3a3;
     font-weight: 400;
     margin: 0;
   }
-  
+
   .${(props) => props.className + "__subtitle"} {
     font-size: 18px;
     color: #616161;
@@ -55,28 +55,28 @@ const Container = styled("div")`
     margin: 0;
     text-align: start;
   }
-  
+
   .${(props) => props.className + "__wrapper"} {
     width: 100%;
   }
-  
+
   .${(props) => props.className + "__panel"} {
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color:#0ad2fae8;
+    background-color: #0ad2fae8;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;   
+    align-items: center;
     transition: var(--animation-duration);
     bottom: -100%;
   }
-  
-  :hover .${(props) => props.className + "__panel"}{
+
+  :hover .${(props) => props.className + "__panel"} {
     transform: translateY(-100%);
   }
-  
+
   .${"__secondary-icon"} {
     margin-top: 10px;
   }
@@ -88,12 +88,12 @@ const Container = styled("div")`
     gap: 8px;
     margin-top: 20px;
   }
-  
-  @media only screen and (max-width: 1250px){
+
+  @media only screen and (max-width: 1250px) {
     width: calc(240px - (23px * 2));
-    height: 240px; 
-    
-    .${(props) => props.className + "__image-container"}{
+    height: 240px;
+
+    .${(props) => props.className + "__image-container"} {
       width: 200px;
       height: 150px;
     }
@@ -101,7 +101,7 @@ const Container = styled("div")`
       height: 100%;
       width: 100%;
     }
-    
+
     .${(props) => props.className + "__hr"} {
       width: 191px;
     }
@@ -109,10 +109,63 @@ const Container = styled("div")`
       margin-top: 0;
     }
   }
-  
-  .${(props) => props.className + "__title"} {
+
+  @media only screen and (max-width: 850px) {
+    width: calc(181px - (23px * 2));
+    height: 181px;
     
+    .${(props) => props.className + "__hr"} {
+      width: 138px;
+      margin-bottom: 5px;
+    }
+    .${(props) => props.className + "__image-container"} {
+      width: 167px;
+      height: 121px;
+    }
+    
+    .${(props) => props.className + "__title"} {
+      font-size: 13px;
+    }
+    .${(props) => props.className + "__subtitle"} {
+      font-size: 12px;
+    }
+    
+    .${(props) => props.className + "__price"} {
+      font-size: 22px;
+    }
+    .${(props) => props.className + "__icon-tertiary"} {
+      height: 25px;
+      width: 25px;
+    }
   }
+
+
+  @media only screen and (max-width: 393px) {
+    width: 89%;
+    height: auto;
+    padding-bottom: 25px;
+    padding-top: 10px;
+
+    .${(props) => props.className + "__image-container"} {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .${(props) => props.className + "__title"} {
+      font-size: 15px;
+    }
+    .${(props) => props.className + "__subtitle"} {
+      font-size: 16px;
+    }
+    .${(props) => props.className + "__wrapper"} {
+      margin-top: 10px;
+    }
+    .${(props) => props.className + "__hr"} {
+      width: 100%;
+    }
+  }
+
+  
   
   `;
 
@@ -162,7 +215,7 @@ const App = (params:params):JSX.Element => {
 
       <div className={ params.className  + "__panel" }>
         <img src={ params.iconSecondary } alt="" className={ params.className + "__icon" }/>
-        <span className={ params.className + "__price"}>{ params.price }<img src={ params.iconTertiary } /> </span>
+        <span className={ params.className + "__price"}>{ params.price }<img className={params.className + "__icon-tertiary"} src={ params.iconTertiary } /> </span>
         { params.children }
       </div>
 
