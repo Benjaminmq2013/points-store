@@ -1,7 +1,7 @@
 import { CSSProperties, useRef } from 'react';
 import styled from 'styled-components';
 
-const Button = styled("button")<{ disabled? : boolean }>`
+const Button = styled("button")<{ isDisabled? : boolean }>`
     color: #fefefe;
     font-size: 24px;
     background-color: #0AD4FA;
@@ -34,7 +34,7 @@ export interface params{
   title?: string
   icon?: string
   onClick?: () => void
-  disabled?: boolean
+  isDisabled?: boolean
   style?: CSSProperties
   className?: string
 }
@@ -53,7 +53,7 @@ const App = (params:params):JSX.Element => {
     params = { ...{ className: 'button' }, ...params }   
 
     return (
-      <Button className={`${ params.className } ${ params.disabled ? "btn-disabled" : "" } ` } onClick={params.onClick} disabled={ params.disabled }  >        
+      <Button className={`${ params.className } ${ params.isDisabled ? "btn-disabled" : "" } ` } onClick={params.onClick} isDisabled={ params.isDisabled }  >        
         {params.icon && (
           <img
             src={params.icon}

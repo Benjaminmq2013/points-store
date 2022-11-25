@@ -44,8 +44,34 @@ const Container = styled("div")`
       width: 4px;
     }
   }
+  @media only screen and (max-width: 500px){
+    .history-modal__modal{
+      width: calc(100vw - 24px);
+      border-radius: 0;
+      padding: 0 12px;
+    }
+    .container__image{
+      height: 60px;
+      width: 83px;
+    }
+    .container__image_container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 98px;
+    }
+    .history_container .container{
+      padding-right: 8px;
+    }
+    .history_container{
+      padding-left: 11px;
+      padding-right: 11px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    
 
- 
+  }
 
 `;
 

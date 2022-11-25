@@ -258,6 +258,11 @@ export const Container = styled.div`
     }
   }
 
+  @media only screen and (min-width: 680px){
+    .mobile-menu{
+      display: none;
+    }
+  }
   @media only screen and (max-width: 680px){
     --view-padding: 20px;   
     .products-filters__container {

@@ -15,8 +15,16 @@ const Container = styled("div")<{ visible: boolean }>`
   align-items: center;
   justify-content: center;
   transition: .4s;
+  z-index: 100;
 
   transform: translateX(${ props => props.visible ? "0%" : "110%" });
+
+  @media only screen and (max-width: 400px){
+    height: 70px;
+    width: auto;
+    padding: 0 30px;
+    font-size: 17px;
+  }
 `;
 
 export interface params {

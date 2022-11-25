@@ -118,7 +118,104 @@ const Container = styled("div")`
     display: flex;
     position: relative;
   }
+  
+  @media only screen and (max-width: 1400px){
+    --modal-height: 700px;
+    --padding: 90px;
+    .shop-modal__wrapper{
+      margin-top: 30px;
+    }
+    .shop-title{
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .shop-modal__title{
+      font-size: 19px;
+      margin: 0;
+      margin-bottom: 4px;
+    }
 
+    .store-summary__key{
+      font-size: 16px;
+      font-weight: normal;
+    }
+    .store-summary__value{
+      
+      font-size: 16px;
+    }
+    .store-summary{
+    }
+    .store-summary__wrapper{
+      margin-top: 19px;
+    }
+    
+  }
+  @media only screen and (max-width: 1200px){
+    --modal-height: 785px;
+    --modal-width: 857px;
+    
+    .pack__container{
+      flex-direction: column;
+      align-items: center;
+    }
+    .shop-modal__modal{
+      overflow-y: scroll;
+    }
+    .basic-pack, .premium-pack, .gold-pack{
+      width: 307px;
+      margin-bottom: 51px;
+    }
+    .store-summary{
+      margin-top: 0;
+      height: 170px;
+      width: 339px;
+      padding: 0;
+    }
+    .store-summary__title{
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+    .store-summary__value{
+      font-size: 12px;
+      margin-right: 20px;
+    }
+    .store-summary__wrapper{
+      width: 100%;
+    }
+    .store-summary__key{
+      margin-left: 32px;
+    }
+    
+    .store-summary__properties{
+      width: 100%;
+      padding: 0 20px;
+    }
+    .store-summary__footer{
+      bottom: -65px;
+    }
+    .store-summary__footer_link{
+      margin-bottom: 30px;
+    }
+    
+  }
+  
+  @media only screen and (max-width: 1200px){
+    --modal-width: 100vw;
+    --modal-height: 100vh;
+    .shop-modal__modal{
+      border-radius: 0;
+    }
+    .shop__container{
+      width: initial;
+    }
+  }
+
+  @media only screen and (max-width: 480px){
+    .shop-title{
+      font-size: 15px;
+      margin-top: 16px;
+    }
+  }
 `;
 
 
@@ -157,7 +254,7 @@ const App = (params: params) => {
       
       onLoading: (loading: boolean) => handleLoading(loading), 
       then: () => {
-        params.updateUserInfo
+        params.updateUserInfo()
         params.onSuccessAlert()
       }
     })

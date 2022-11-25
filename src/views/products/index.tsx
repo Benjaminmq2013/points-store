@@ -8,6 +8,7 @@ import History from "../history"
 import Shop from "../points-store"
 import Icon from "../../components/Icon"
 import Alert from "../../components/alerts"
+import Menu from "../../components/menu"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useGetData from '../../hooks/useGetData';
@@ -121,8 +122,8 @@ const App = ():JSX.Element => {
                 <Button 
                   title={ user.points < product.cost ? "Not enough points" : "Redeem mow" } 
                   className="buy-button"
-                  disabled = { user.points < product.cost }
-                  icon={ isLoading === true ? "assets/icons/loading.svg" : "assets/icons/loading.svg"} 
+                  isDisabled = { user.points < product.cost }
+                  icon={ isLoading === true ? "assets/icons/loading.svg" : ""} 
                   onClick={() => handleRedeem( product )} 
                 /> 
                 {user.points < product.cost && <span className="points-remaining">You need { product.cost - user.points } points more</span>}
@@ -147,6 +148,7 @@ const App = ():JSX.Element => {
       {isLoading && <Icon className="loading-icon" src="assets/icons/loading.svg" /> }
       <History visible={ visible } handleClose={ handleClose } history = { user.redeemHistory } />
       <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading={ isLoading } onSuccessAlert={ handleShowWarning } />
+      <Menu className="mobile-menu" options={[ {title: "Get points", icon: "assets/icons/cash.svg", onClick: handleModalVisible  }, { title: "History", icon: "assets/icons/book-grey.svg", onClick: handleVisible } ]} />
 
       <Alert className="alert-error" title='You need 3000 points more to claim it!' visible={ alertVisible.error } handleHideAlert={ handleHideError } />
       <Alert className="alert-success" title='Purchase successful!' visible={ alertVisible.success } handleHideAlert={ handleHideSucess } />
