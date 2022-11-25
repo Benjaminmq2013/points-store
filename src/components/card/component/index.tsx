@@ -163,6 +163,7 @@ const Container = styled("div")`
     .${(props) => props.className + "__hr"} {
       width: 100%;
     }
+    
   }
 
   

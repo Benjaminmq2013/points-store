@@ -1,7 +1,7 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useRef } from 'react';
 import styled from 'styled-components';
 
-const Button = styled("button")`
+const Button = styled("button")<{ disabled? : boolean }>`
     color: #fefefe;
     font-size: 24px;
     background-color: #0AD4FA;
@@ -15,6 +15,8 @@ const Button = styled("button")`
     display: flex;
     align-items: center;
     gap: 3px;
+
+
     
     :hover{
         background-color: #EDEDED;
@@ -29,11 +31,12 @@ const Button = styled("button")`
 `;
 
 export interface params{
-    title?: string
-    icon?: string
-    onClick?: () => void
-    style?: CSSProperties
-    className?: string
+  title?: string
+  icon?: string
+  onClick?: () => void
+  disabled?: boolean
+  style?: CSSProperties
+  className?: string
 }
 
 /**
@@ -45,17 +48,17 @@ export interface params{
  * @returns 
  */
 
-const App = (params:params):JSX.Element => {
-    params = { ...{ className: 'button' }, ...params }
+const App = (params:params):JSX.Element => {  
+
+    params = { ...{ className: 'button' }, ...params }   
 
     return (
-      <Button className={params.className} onClick={params.onClick}>
-        
+      <Button className={`${ params.className } ${ params.disabled ? "btn-disabled" : "" } ` } onClick={params.onClick} disabled={ params.disabled }  >        
         {params.icon && (
           <img
             src={params.icon}
             alt="icon"
-            className={params.className + "__icon"}
+            className={params.className + "__icon" }
             onClick={params.onClick}
           />
         )}
