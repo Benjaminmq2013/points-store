@@ -93,11 +93,6 @@ const Container = styled("div")<{ selected?: boolean }>`
     width: 10px;
     margin-right: 4px;    
   }
-  
-  
-  
-  
-
 `;
 
 const Icon = styled("div")<{ src?:string }>`
@@ -134,17 +129,50 @@ export interface params {
 /** 
  * 
  * CSS Variables:
- * 
+ * - --animation-duration
  * 
  * 
  * internal className:
+ *  - container
+ *    - __span
+ *      - __icon
  *  
+ *    - __name_container
+ *      - __name
+ *        - __icon_secondary
+ * 
+ *    - __tag
+ * 
+ *    - __tagSecondary
+ *      - __icon_Tertiary
+ * 
+ *    - __title
  * 
  * 
- * @param params 
+ * @param params.
+ * @param params.onClick callback
+ * @param params.icon URL for an icon
+ * @param params.title title
+ * @param params.selected when selected, new styles will be added
+ * @param params.name optional tag
+ * @param params.tag optional tag
+ * @param params.price 
+ * @param params.iconSecondary a secondary icon (url)
+ * @param params.iconTertiary a tertiary icon (url)
+ * @param params.tagSecondary optional tag
+ * @param params.style CSSProperties
+ * @param params.className className for the container and a prefix for the internals
  * 
  * 
  * @example
+ * <Stack
+      {...elem}
+      name="selected"
+      icon="assets/icons/coin.svg"
+      iconSecondary="assets/icons/check.svg"
+      iconTertiary="assets/icons/offer.svg"
+      key={ id }
+    />
  * 
  *  
  * @returns JSX.Element

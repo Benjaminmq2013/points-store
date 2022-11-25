@@ -36,9 +36,26 @@ export interface params {
 }
 
 /**
+ * Internal className:
+ *  - container
+ *    - __option
+ *      - option-icon
  * 
- * @param params 
- * @returns 
+ * @param params
+ * @param params.options a list of options, you can import the { option } type from here
+ * @param params.onClick callback
+ * @param params.style CSS in JS Properties
+ * @param params.className className for the container of this component and prefix for the internals
+ * 
+ * <Menu 
+ *  className="mobile-menu" 
+ *  options={[ 
+ *    {title: "Get points", icon: "assets/icons/cash.svg", onClick: handleModalVisible  }, 
+ *    { title: "History", icon: "assets/icons/book-grey.svg", onClick: handleVisible } 
+ *  ]} 
+ * />
+ * 
+ * @returns JSX.Element
  */
 
 const App = (params:params):JSX.Element => {

@@ -82,9 +82,45 @@ export interface params {
 }
 
 /**
+ * internal className:
+ * - container 
+ *    - __row
+ *      - __image_container
+ *        - __image
  * 
- * @param params 
- * @returns 
+ *    - __column
+ *      - __title
+ *      - __subtitle
+ * 
+ *    - __wrapper
+ *      - __icon
+ *      - __row
+ *        - __span
+ *        - __secondary-icon
+ * 
+ * 
+ * @param params
+ * @param params.title Title for the item
+ * @param params.subtitle Subtitle
+ * @param params.span optional span
+ * @param params.icon URL for an icon
+ * @param params.icon URL for an optional and secondary icon
+ * @param params.onClick callback
+ * @param params.style CSS in JS Properties
+ * @param params.className className for the container of this component and prefix for the internals
+ * 
+ * @example
+ * <Item
+      image={ elem.img.url }
+      title={ elem.category }
+      subtitle={ elem.name }
+      iconSecondary="assets/icons/coin.svg"
+      icon="assets/icons/buy-blue.svg"
+      key={ i }
+      span={`${ elem.cost }`}
+    />
+ * 
+ * @returns JSX.Element
  */
 
 const App = (params:params):JSX.Element => {
@@ -97,18 +133,18 @@ const App = (params:params):JSX.Element => {
             <img src={ params.image } className={ params.className + "__image" } />
           </figure>
 
-        <div className={ params.className + "__column" }>
-          <span className={ params.className + "__title" } >{ params.title }</span>
-          <span className={ params.className + "__subtitle" } >{ params.subtitle }</span>
-        </div>
-
-        <div className={ params.className + "__wrapper" }>
-            <img src={ params.icon } alt="" className={ params.className + "__icon"} />
-          <div className={ params.className + "__row"}>
-            <span className={ params.className + "__span" } >{ params.span }</span>
-            <img src={ params.iconSecondary } alt="" className={ params.className + "__secondary-icon"} />
+          <div className={ params.className + "__column" }>
+            <span className={ params.className + "__title" } >{ params.title }</span>
+            <span className={ params.className + "__subtitle" } >{ params.subtitle }</span>
           </div>
-        </div>
+
+          <div className={ params.className + "__wrapper" }>
+            <img src={ params.icon } alt="" className={ params.className + "__icon"} />
+            <div className={ params.className + "__row"}>
+              <span className={ params.className + "__span" } >{ params.span }</span>
+              <img src={ params.iconSecondary } alt="" className={ params.className + "__secondary-icon"} />
+            </div>
+          </div>
           
         </div>
       </Container>

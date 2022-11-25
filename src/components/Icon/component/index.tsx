@@ -24,9 +24,23 @@ export interface params {
 }
 
 /**
+ * Reusable SVG container
+ * -The target is to have a customizable SVG container
+ * -You can set colors to it by just assigning a background-color
  * 
- * @param params 
- * @returns 
+ * internal className:
+ *  - container
+ * 
+ * @param params
+ * @param params.src src for the Icon
+ * @param params.onClick callback
+ * @param params.style CSS in JS Properties
+ * @param params.className className for the container of this component and prefix for the internals
+ * 
+ * @example 
+ * <Icon className="navigate-button" src="assets/icons/arrow-left.svg" onClick={ handleLastPage } ></Icon>
+ * 
+ * @returns JSX.Element
  */
 
 const App = (params:params):JSX.Element => {

@@ -89,17 +89,38 @@ export interface params {
 /** 
  * 
  * CSS Variables:
- * 
+ * - --padding
  * 
  * 
  * internal className:
- *  
+ *  - container
+ *    - __wrapper
+ *      - __title
+ *        - __properties
+ *          - __key
+ *          - __value
  * 
+ *        - button_container
+ *      - __bottom-text
  * 
- * @param params 
+ *    - __footer
+ *      - __footer_link
  * 
+ * @param params.
+ * @param params.title Title
+ * @param params.values List of properties key-value for the summary, you can import { property } types from here.
+ * @param params.button Button is a JSX.Element, you can send another component here.
+ * @param params.footerLinks Anchor links, you can send the URL here
+ * @param params.style CSSProperties
+ * @param params.className className for the container and a prefix for the internals
  * 
  * @example
+ * 
+ * <Summary
+    title="Summary:"
+    values={ selected === "basic" ? basicSelected : selected === "premium" ? premiumSelected : goldSelected  }
+    className="store-summary"    
+  />
  * 
  *  
  * @returns JSX.Element

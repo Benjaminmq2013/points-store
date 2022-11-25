@@ -111,9 +111,21 @@ export interface params{
  * 
  *    - header-button
  *    
+ * @example
+ * <Header
+        className="products-header"
+        options={options}
+        logo="assets/aerolab-logo.svg"
+        Phill={<Button className="header-button" title={`${ user.points }`} icon={ "assets/icons/coin.svg" } />}
+    />
  * 
- * 
- * @param params 
+ * @param params
+ * @param params.logo An URL for the logo
+ * @param params.options A list of "option" element, you can import the types { options } from this component
+ * @param params.Phill This is a JSX.Element, think of it like a children
+ * @param params.onClick callback
+ * @param params.style CSS in JS Properties
+ * @param params.className className for the container of this component and prefix for the internals
  * @returns 
  */
 

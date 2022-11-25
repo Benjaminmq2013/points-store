@@ -49,9 +49,21 @@ export interface params {
 }
 
 /**
+ * internal className:
+ *  - container
+ *    - __header
  * 
- * @param params 
- * @returns 
+ * @param params
+ * @param params.title A title for the Hero.
+ * @param params.src The URL for the image inside the Hero
+ * @param params.onClick callback
+ * @param params.style CSS in JS Properties
+ * @param params.className className for the container of this component and prefix for the internals
+ * 
+ * @example:
+ * <Hero src="assets/header-x1.png" title='Electronics' />
+ * 
+ * @returns JXS.Element
  */
 
 const App = (params:params):JSX.Element => {

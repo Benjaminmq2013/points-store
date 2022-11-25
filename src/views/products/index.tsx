@@ -1,5 +1,6 @@
 
 
+// Make hover on these elements and watch the docs!
 import Header, { optionProps } from "../../components/header"
 import Button from "../../components/button"
 import Hero from "../../components/hero"

@@ -188,13 +188,51 @@ export interface params {
 /**
  * 
  * css variables:
- * --animation-duration: .2s;
+ * --animation-duration
  * 
  * Internal className:
+ *  - container
+ *    - __image-container
+ *      - __icon
+ *      - __image
  * 
+ *    - __hr
  * 
- * @param params 
- * @returns 
+ *    - __wrapper
+ *      - __title
+ *      - __subtitle
+ * 
+ *    - __panel
+ *      - __icon
+ *      - __price
+ * 
+ * @param params.title title
+ * @param params.subtitle subtitle
+ * @param params.price Price for a product
+ * @param params.image URL for the image
+ * @param params.icon An icon for the card
+ * @param params.iconSecondary A second icon for the card
+ * @param params.iconTertiaty A third icon for the card
+ * @param params.children JSX.Element
+ * @param params.onClick callback
+ * @param params.style CSS in JS Properties
+ * @param params.className className for the container of this component and prefix for the internals
+ * 
+ * @example
+ * <Card 
+ *    key={ product._id }
+ *    icon='assets/icons/buy-blue.svg' 
+ *    image={ product.img.url } 
+ *    title={ product.category } 
+ *    subtitle={ product.name } 
+ *    price = { product.cost }
+ *    iconSecondary='assets/icons/buy-white.svg' 
+ *    iconTertiary='assets/icons/coin.svg' 
+ *    className={user.points < product.cost ? "not-enough-money" : ""}      
+ *  />
+ * 
+ * @returns JXS.Element
+ * 
  */
 
 const App = (params:params):JSX.Element => {
