@@ -8,56 +8,34 @@ import Card from '../../components/card';
 import History from "../history"
 import Shop from "../points-store"
 import Icon from "../../components/Icon"
-import Alert from "../../components/alerts"
+import Alerts from "../../components/alerts"
 import Menu from "../../components/menu"
 
 import useHandleMenu from '../../hooks/useHandleMenu';
 import useGetData from '../../hooks/useGetData';
 import useHandleFilters from '../../hooks/useHandleFilters';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import fetchData from '../../api/fetchData';
-import { setLoading } from '../../store/slices/shop';
-import useAlert from '../../hooks/useAlert';
-import { T } from '../../interface';
+import redeemHandler from "../../middleware/handleRedeem";
 
-
+// main Styled-Component
 import { Container } from './styles';
 
 
 
 const App = ():JSX.Element => {
   const data = useSelector((state: RootState) => state.shopReducer.products )
-  
-  const { alertVisible, handleHideError, handleHideSucess, handleHideWarning, handleShowError, handleShowSucess, handleShowWarning } = useAlert()
+
+
+  const { Alert, createAlert } = Alerts({})
   
   const { filteredProducts, filters, handleHighest, handleLowest, handleRecent, handleNextPage, handleLastPage  } = useHandleFilters()
   const { handleVisible, visible, handleClose } = useHandleMenu()  
   const { user, getUser, isLoading } = useGetData()
 
-  const dispatch = useDispatch()
-  const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
+  const handleRedeem = redeemHandler({ isLoading, user, createAlert, getUser })
 
-  const handleRedeem = (product: T.products) => {    
-    if( isLoading ) return    
-    if( user.points < product.cost ){
-      handleShowError()
-      return
-    }
-    
-    fetchData({ 
-      method: "post", 
-      entryPoint: "/redeem", 
-      data: { "productId": product._id },
-      
-      onLoading: (loading: boolean) => handleLoading(loading), 
-      then: () => {
-        getUser()
-        handleShowSucess()
-      }
-    })
 
-  }
   
   const { 
     handleVisible: handleModalVisible, 
@@ -78,7 +56,7 @@ const App = ():JSX.Element => {
         className="products-header"
         options={options}
         logo="assets/aerolab-logo.svg"
-        Phill={<Button className="header-button" title={`${ user.points }`} icon={ "assets/icons/coin.svg" } />}
+        Phill={<Button className="header-button" title={`${ user.points || 0 }`} icon={ "assets/icons/coin.svg" } />}
       />
 
       <Hero src="assets/header-x1.png" title='Electronics' />
@@ -91,11 +69,14 @@ const App = ():JSX.Element => {
           <span className="product-subtitle">Sort By:</span>
         </div>
 
+
         <div className="product-filters__buttons">
+          {/* I consider that mapping is not strictly needed here */}
           <Button title='Most recent' onClick={ handleRecent } className={`filter-button ${ filters.sortBy === 'recent' && "btn-selected" }`} />
           <Button title='Lowest price' onClick={ handleLowest } className={`filter-button ${ filters.sortBy === 'lowest' && "btn-selected" }`} />
           <Button title='Highest price' onClick={ handleHighest } className={`filter-button ${ filters.sortBy === 'highest' && "btn-selected" }`} />
         </div>
+
 
         <div className="product-navigate__buttons">          
           <Icon className="navigate-button" src="assets/icons/arrow-left.svg" onClick={ handleLastPage } ></Icon>
@@ -146,15 +127,13 @@ const App = ():JSX.Element => {
         <hr className="product__hr product-footer_hr" />
       </footer>
       
+      
       {isLoading && <Icon className="loading-icon" src="assets/icons/loading.svg" /> }
       <History visible={ visible } handleClose={ handleClose } history = { user.redeemHistory } />
-      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading={ isLoading } onSuccessAlert={ handleShowWarning } />
+      <Shop handleClose={ handleCloseModal } visible={ modalVisible } updateUserInfo={ getUser } isLoading={ isLoading }  /> 
       <Menu className="mobile-menu" options={[ {title: "Get points", icon: "assets/icons/cash.svg", onClick: handleModalVisible  }, { title: "History", icon: "assets/icons/book-grey.svg", onClick: handleVisible } ]} />
 
-      <Alert className="alert-error" title='You need 3000 points more to claim it!' visible={ alertVisible.error } handleHideAlert={ handleHideError } />
-      <Alert className="alert-success" title='Purchase successful!' visible={ alertVisible.success } handleHideAlert={ handleHideSucess } />
-      <Alert className="alert-warning" title='7500 points were added!' visible={ alertVisible.warning } handleHideAlert={ handleHideWarning } />
-      
+      { Alert }
           
     </Container>
   );

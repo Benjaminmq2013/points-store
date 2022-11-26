@@ -1,11 +1,11 @@
-import { CSSProperties, useEffect } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Container = styled("div")<{ visible: boolean }>`
+const Container = styled("div")<{ visible: boolean, bgColor?: string }>`
   position: fixed;
   right: 10px;
   top: 90px;
-  background-color: #FF8585;
+  background-color: ${props => props.bgColor ? props.bgColor : "#FF8585" };
   height: 89px;
   width: 390px;
   border-radius: 100px;
@@ -27,17 +27,6 @@ const Container = styled("div")<{ visible: boolean }>`
   }
 `;
 
-export interface params {
-  onClick?: () => void;
-  handleHideAlert: () => void;
-
-  title: string;
-  visible: boolean;
-  children?: JSX.Element | JSX.Element[];
-
-  style?: CSSProperties;
-  className?: string;
-}
 
 /**
  * 
@@ -48,25 +37,47 @@ export interface params {
  * 
  * 
  * @param params 
- * @returns 
+ * @returns JSX.Element and callback (message:string) => void
  */
 
-const App = (params:params):JSX.Element => {
+export interface params {
+  onClick?: () => void;
+  children?: JSX.Element | JSX.Element[];
+
+  style?: CSSProperties;
+  className?: string;
+}
+
+export interface alertProps {
+  active: boolean, 
+  message: string,
+  color?: string
+}
+
+const App = (params:params) => {
   params = { ...{ className: 'container' }, ...params }
 
-  useEffect(() => {
-    setTimeout(() => {
-      if(params.visible === true) params.handleHideAlert()
-    }, 4000)
-  }, [params.visible])
-  
+  const INITIAL_STATE:alertProps = { active: false, message: "" }
+  const [alert, setAlert] = useState<alertProps>(INITIAL_STATE)
 
-  return (
-    <Container className={ params.className } visible={ params.visible }  >
-      { params.title }
-      { params.children }
+  const createAlert = (message: string, color?: string) => setAlert({ active: true, message, color: color  })
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAlert({ ...INITIAL_STATE, color: alert.color })
+    }, 4000)
+
+    return () => clearTimeout(timer)
+    
+  }, [alert.active])
+  
+  const Alert:JSX.Element = (
+    <Container className={params.className} visible={ alert.active } bgColor={ alert.color } >
+      {alert.message}
+      {params.children}
     </Container>
-  )
+  );
+  return { Alert, createAlert }
 }
 
 export default App

@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
 
+// Animations
 export const rotate = keyframes`
   from {
     transform: rotate(0deg);
@@ -10,6 +11,7 @@ export const rotate = keyframes`
   }
 `;
 
+// Styles
 
 export const Container = styled.div`
 
@@ -180,16 +182,7 @@ export const Container = styled.div`
         background-color: #319DFC;
       }
   }
-
   
-
-  .alert-warning{
-    background-color: #5A8CD8;
-  }
-
-  .alert-success{
-    background-color: #5AD866;
-  }
   
   .points-remaining{
     color: white;

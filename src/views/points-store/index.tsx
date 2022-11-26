@@ -1,62 +1,41 @@
 
+import { useState } from 'react';
+
+
 // Make hover on these elements and watch the docs!
 import Modal from '../../components/modal';
 import Pack, { params as packProps } from "../../components/stack"
 import Summary, { property } from "../../components/summary"
 import Button from "../../components/button"
 import Icon from "../../components/Icon"
+import Alerts from "../../components/alerts"
 
-import fetchData from '../../api/fetchData';
 
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setLoading } from '../../store/slices/shop';
+import getPointsHandler from '../../middleware/handleGetPoints';
+
 
 // Styled-Container
 import { Container } from "./style"
 
 
 interface params{
-    visible: boolean;
-    isLoading: boolean;
-    handleClose: () => void
-    updateUserInfo: () => void
-    onSuccessAlert: () => void
+  visible: boolean;
+  isLoading: boolean;
+  handleClose: () => void
+  updateUserInfo: () => void
 }
 
 const links:string[] = [ "Contact us", "Terms and conditions", "Refund policies" ]
 
 const App = (params: params) => {
+  const { Alert, createAlert } = Alerts({})
   const [selected, setSelected] = useState<"basic" | "premium" | "gold" | null>(null);
 
   const handleSelectBasic = () => setSelected("basic");
   const handleSelectPremium = () => setSelected("premium");
   const handleSelectGold = () => setSelected("gold");
-  const handleLoading = (loading: boolean) => dispatch(setLoading(loading))
   
-  const dispatch = useDispatch() 
-   
-
-  const handleGetPoints = () => {
-    if( params.isLoading ) {
-      console.log(params.isLoading)
-      console.log("Espera un momento...") 
-      return
-    }
-
-    fetchData({ 
-      method: "post", 
-      entryPoint: "/user/points", 
-      data: { "amount": selected === "basic" ? 1000 : selected === "premium" ? 5000 : selected === "gold" ? 7500 : 0 },
-      
-      onLoading: (loading: boolean) => handleLoading(loading), 
-      then: () => {
-        params.updateUserInfo()
-        params.onSuccessAlert()
-      }
-    })
-
-  }
+  const handleGetPoints = getPointsHandler({ createAlert, selected, isLoading: params.isLoading, updateUserInfo: params.updateUserInfo })
   
 
   const data: packProps[] = [
@@ -150,6 +129,8 @@ const App = (params: params) => {
           footerLinks={links}
         />
       </Modal>
+
+      { Alert }
     </Container>
   );
 };
