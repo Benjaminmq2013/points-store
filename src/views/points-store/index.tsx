@@ -126,7 +126,7 @@ const App = (params: params) => {
             {params.isLoading && <Icon className="loading-icon store-loading-icon" src="assets/icons/loading.svg" /> }
           </>
           }
-          footerLinks={links}
+          footerLinks={ links }
         />
       </Modal>
 

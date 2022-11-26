@@ -16,7 +16,10 @@ const getPointsHandler = (params:params) => {
 
     const handleGetPoints = () => {
         if (params.isLoading) return
-        if (params.selected === null) return
+        if (params.selected === null){ 
+            params.createAlert("Select one option first")
+            return
+        }
         if (navigator.onLine === false) {
             params.createAlert("Not internet connection")
             return

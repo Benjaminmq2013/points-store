@@ -11,11 +11,34 @@ export const rotate = keyframes`
   }
 `;
 
+
+export const swipeDown = keyframes`
+  from{
+    transform: translateY(-80px);
+  }
+`
+
+export const swipeUp = keyframes`
+  from{
+    transform: translateY(+80px);
+  }
+`
+export const swipeRight = keyframes`
+  from{
+    transform: translateX(-80px);
+  }
+`
+
 // Styles
 
 export const Container = styled.div`
 
   --view-padding: 132px;
+
+  .products-header{
+    animation: ${swipeDown} .3s linear both;
+    animation-delay: .2s;
+  }
 
   .header-button {
     background-color: #ededed;
@@ -34,6 +57,9 @@ export const Container = styled.div`
     height: 49px;
     padding: 0 var(--view-padding);
     margin-top: 64px;
+    
+    animation: ${swipeRight} .3s linear both;
+    animation-delay: .2s;
   }
 
   .product-filters__tags{
@@ -96,6 +122,9 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
+
+    animation: ${swipeUp} .5s linear both;
+    animation-delay: .1s;
   }
 
   .product__hr{

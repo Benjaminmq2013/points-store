@@ -1,5 +1,7 @@
 import { CSSProperties, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+
 
 const Container = styled("div")<{ className?: string, hover: number }>`
   height: 80px;  

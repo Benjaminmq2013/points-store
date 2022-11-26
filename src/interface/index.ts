@@ -1,5 +1,5 @@
 
-export declare namespace T{
+export declare namespace T {
 
   interface products {
     img: Img;
